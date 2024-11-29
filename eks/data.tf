@@ -1,3 +1,10 @@
+data "aws_instance" "ec2" {
+    filter {
+        name = "tag:eks:nodegroup-name"
+        values = ["node-group-tech-challenge"]
+    }
+}
+
 data "aws_vpc" "vpc" {
   cidr_block = var.vpcCidr
 }
@@ -17,3 +24,4 @@ data "aws_subnet" "subnet" {
 data "aws_iam_role" "labrole" {
   name = "LabRole"
 }
+

@@ -1,4 +1,4 @@
-resource "aws_eks_cluster" "eks_cluster" {
+resource "aws_eks_cluster" "tc_eks_cluster" {
   name     = var.cluster_name
   role_arn = data.aws_iam_role.labrole.arn
 
@@ -6,7 +6,7 @@ resource "aws_eks_cluster" "eks_cluster" {
     subnet_ids = [
       for subnet in data.aws_subnet.subnet : subnet.id if subnet.availability_zone != "${var.region_default}e"
     ]
-    security_group_ids = [aws_security_group.security_group.id]
+    security_group_ids = [aws_security_group.tc_security_group.id]
   }
 
   access_config {

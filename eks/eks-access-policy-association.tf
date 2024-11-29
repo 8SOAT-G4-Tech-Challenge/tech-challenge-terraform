@@ -1,5 +1,5 @@
 resource "aws_eks_access_policy_association" "eks_policy" {
-  cluster_name  = aws_eks_cluster.eks_cluster.name
+  cluster_name  = aws_eks_cluster.tc_eks_cluster.name
   policy_arn    = var.policy_arn
   principal_arn = "arn:aws:iam::${var.account_id_voclabs}:role/voclabs"
 
