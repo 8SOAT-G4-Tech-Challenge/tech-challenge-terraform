@@ -1,15 +1,11 @@
-data "aws_eks_cluster" "eks_cluster_techchallenge" {
-  name = "tech-challenge-cluster"
+data "aws_db_instance" "rds_database_url" {
+  db_instance_identifier = "tech-challenge-database"
 }
 
-output "eks_cluster_endpoint" {
-  value = data.aws_eks_cluster.eks_cluster_techchallenge.endpoint
+data "aws_secretsmanager_secret" "database_secret" {
+  name = "aws_rds_endpoint"
 }
 
-output "kubeconfig-certificate-authority-data" {
-  value = data.aws_eks_cluster.eks_cluster_techchallenge.certificate_authority[0].data
-}
-
-data "aws_eks_cluster_auth" "aws_eks_cluster_auth" {
-  name = "tech-challenge-cluster"
+data "aws_secretsmanager_secret_version" "secret-version" {
+  secret_id = data.aws_secretsmanager_secret.database_secret.id
 }

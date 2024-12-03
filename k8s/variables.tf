@@ -1,3 +1,5 @@
-variable "cluster_name" {
-  default = "tech-challenge-cluster"
-}
+variable "cluster_name" {}
+
+variable "eks_cluster_endpoint" {}
+
+variable "kubeconfig-certificate-authority-data" {}

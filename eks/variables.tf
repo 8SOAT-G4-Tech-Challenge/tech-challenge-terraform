@@ -20,10 +20,6 @@ variable "intance_eks_type" {
 
 variable "account_id_voclabs" {}
 
-variable "vpcCidr" {
-  default = "172.31.0.0/16"
-}
+variable "vpcCidr" {}
 
-variable "cluster_name" {
-  default = "tech-challenge-cluster"
-}
+variable "cluster_name" {}
