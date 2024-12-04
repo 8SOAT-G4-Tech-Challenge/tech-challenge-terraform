@@ -13,3 +13,7 @@ output "kubeconfig-certificate-authority-data" {
 output "tc_lb_target_group_arn" {
   value = aws_lb_target_group.tc_lb_target_group.arn
 }
+
+output "aws_lb_listener" {
+	value = aws_lb_listener.tc_lb_listener.arn
+}
