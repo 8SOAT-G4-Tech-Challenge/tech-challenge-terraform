@@ -17,3 +17,7 @@ output "tc_lb_target_group_arn" {
 output "aws_lb_listener" {
 	value = aws_lb_listener.tc_lb_listener.arn
 }
+
+output "private_subnet_ids" {
+	value = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+}

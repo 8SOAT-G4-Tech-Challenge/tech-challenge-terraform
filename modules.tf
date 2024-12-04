@@ -18,3 +18,14 @@ module "lb" {
   tc_lb_target_group_arn = module.eks.tc_lb_target_group_arn
   depends_on             = [module.k8s]
 }
+
+module "api_gateway" {
+  source     = "./api_gateway"
+  depends_on = [module.lb]
+
+  alb_dns_name                = module.eks.aws_lb_listener
+  private_subnet_ids          = module.eks.private_subnet_ids
+  tech_challenge_project_name = var.tech_challenge_project_name
+  region_default              = var.region_default
+  vpcCidr                     = var.vpcCidr
+}

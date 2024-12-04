@@ -12,3 +12,9 @@ variable alb_dns_name {
 	description = "The DNS name of the ALB"
 	type        = string
 }
+
+variable "vpcCidr" {}
+
+variable "private_subnet_ids" {
+	type = list(string)
+}
