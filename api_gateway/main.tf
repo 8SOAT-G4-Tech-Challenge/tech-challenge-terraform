@@ -1,25 +1,3 @@
-/* # Create VPC
-resource "aws_vpc" "main" {
-  cidr_block = "10.1.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  tags = {
-    Name = "vpc-${var.tech_challenge_project_name}"
-  }
-}
-
-# Create subnet in the VPC 
-resource "aws_subnet" "main" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.1.1.0/24"
-  availability_zone = "us-east-1a"
-
-  tags = {
-    Name = "subnet-${var.tech_challenge_project_name}"
-  }
-} */
-
 # Create security group in the VPC
 resource "aws_security_group" "vpc_link" {
   name        = "vpc-link-${var.tech_challenge_project_name}-sg"
