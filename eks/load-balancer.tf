@@ -1,4 +1,4 @@
-resource "aws_lb" "tc_load_balancer" {
+/* resource "aws_lb" "tc_load_balancer" {
   name               = "alb-${var.tech_challenge_project_name}"
   internal           = false
   load_balancer_type = "application"
@@ -34,7 +34,7 @@ resource "aws_lb_listener" "tc_lb_listener" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.tc_lb_target_group.arn
   }
-}
+} */
 
 # resource "aws_lb_target_group_attachment" "tc_balancer_attach" {
 #     target_group_arn = aws_lb_target_group.tc_lb_target_group.arn

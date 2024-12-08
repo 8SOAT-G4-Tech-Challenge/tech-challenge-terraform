@@ -4,7 +4,10 @@ resource "aws_eks_cluster" "tc_eks_cluster" {
 
   vpc_config {
     subnet_ids = [
-      for subnet in data.aws_subnet.subnet : subnet.id if subnet.availability_zone != "${var.region_default}e"
+			aws_subnet.private_subnet_1.id,
+			aws_subnet.private_subnet_2.id,
+      aws_subnet.public_subnet_1.id,
+			aws_subnet.public_subnet_2.id
     ]
     security_group_ids = [aws_security_group.tc_security_group.id]
 		endpoint_private_access = true

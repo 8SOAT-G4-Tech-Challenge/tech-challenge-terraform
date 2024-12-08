@@ -2,6 +2,13 @@ data "aws_vpc" "vpc" {
   cidr_block = var.vpcCidr
 }
 
+data "aws_internet_gateway" "default-igw" {
+  filter {
+    name   = "attachment.vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
+}
+
 data "aws_subnets" "subnets" {
   filter {
     name   = "vpc-id"

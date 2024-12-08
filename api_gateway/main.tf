@@ -49,7 +49,7 @@ resource "aws_apigatewayv2_api" "api_gateway" {
 # Create API Gateway integration with ALB
 resource "aws_apigatewayv2_integration" "alb_integration" {
   api_id           = aws_apigatewayv2_api.api_gateway.id
-  integration_uri    = var.alb_dns_name
+  integration_uri    = var.nlb_listener_arn
   integration_type = "HTTP_PROXY"
   integration_method = "ANY"
   connection_type    = "VPC_LINK"

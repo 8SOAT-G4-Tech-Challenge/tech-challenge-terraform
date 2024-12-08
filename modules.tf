@@ -13,17 +13,19 @@ module "k8s" {
   depends_on                            = [module.eks]
 }
 
-module "lb" {
+/* module "lb" {
   source                 = "./lb"
   tc_lb_target_group_arn = module.eks.tc_lb_target_group_arn
   depends_on             = [module.k8s]
-}
+} */
 
 module "api_gateway" {
-  source     = "./api_gateway"
-  depends_on = [module.lb]
+  source = "./api_gateway"
+  # depends_on = [module.lb]
 
-  alb_dns_name                = module.eks.aws_lb_listener
+	# load_balancer_ingress 					= module.k8s.load_balancer_ingress
+	nlb_listener_arn 							= module.k8s.nlb_listener_arn
+  # nlb_hostname                = module.k8s.nlb_hostname
   private_subnet_ids          = module.eks.private_subnet_ids
   tech_challenge_project_name = var.tech_challenge_project_name
   region_default              = var.region_default
