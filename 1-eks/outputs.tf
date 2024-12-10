@@ -15,6 +15,6 @@ output "kubeconfig-certificate-authority-data" {
 } */
 
 output "aws_lb_listener" {
-	value = aws_lb_listener.tc_lb_listener.arn
+	value = aws_lb_listener.nlb_listener.arn
 }
 

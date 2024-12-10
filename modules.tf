@@ -15,12 +15,6 @@ module "k8s" {
   depends_on                            = [module.eks]
 }
 
-/* module "lb" {
-  source                 = "./lb"
-  tc_lb_target_group_arn = module.eks.tc_lb_target_group_arn
-  depends_on             = [module.k8s]
-} */
-
 module "cognito" {
   source = "./3-cognito"
 
@@ -28,7 +22,7 @@ module "cognito" {
   admin_user_email    = var.admin_user_email
   admin_user_password = var.admin_user_password
 
-	depends_on          = [module.eks, module.k8s]
+  depends_on = [module.eks, module.k8s]
 }
 
 module "lambda" {
@@ -37,7 +31,7 @@ module "lambda" {
   project_name   = var.project_name
   aws_account_id = var.account_id_voclabs
 
-	depends_on     = [module.eks, module.k8s]
+  depends_on = [module.eks, module.k8s]
 }
 
 module "api_gateway" {

@@ -57,9 +57,9 @@ data "aws_iam_role" "labrole" {
         values = ["node-group-tech-challenge"]
     }
 } */
-data "aws_instances" "instance_eks" {
+/* data "aws_instances" "instance_eks" {
   filter {
-    name   = "tag:kubernetes.io/cluster/${aws_eks_cluster.tc_eks_cluster.name}"
+    name   = "tag:kubernetes.io/cluster/tech-challenge-cluster"
     values = ["owned"]
   }
 
@@ -67,6 +67,6 @@ data "aws_instances" "instance_eks" {
     name   = "instance-state-name"
     values = ["running"]
   }
-}
+} */
 
 

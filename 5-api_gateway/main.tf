@@ -2,7 +2,7 @@
 resource "aws_apigatewayv2_vpc_link" "vpc_link" {
   name               	= "${var.project_name}-vpc-link"
   security_group_ids 	= [data.aws_security_group.tc_security_group.id]
-  subnet_ids         = data.aws_subnets.private.ids
+  subnet_ids         = [data.aws_subnet.subnet_private_1.id, data.aws_subnet.subnet_private_2.id]
 }
 
 # Create HTTP API Gateway
@@ -54,8 +54,8 @@ resource "aws_lambda_permission" "apigw_lambda" {
   source_arn    = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
 }
 
-# Create API Gateway integration with ALB
-resource "aws_apigatewayv2_integration" "alb_integration" {
+# Create API Gateway integration with NLB
+resource "aws_apigatewayv2_integration" "nlb_integration" {
   api_id           = aws_apigatewayv2_api.api_gateway.id
   integration_uri    = var.lb_listener_arn
   integration_type = "HTTP_PROXY"
@@ -72,7 +72,7 @@ resource "aws_apigatewayv2_integration" "alb_integration" {
 resource "aws_apigatewayv2_route" "route_admin" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "ANY /admin/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.alb_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
 }
@@ -81,7 +81,7 @@ resource "aws_apigatewayv2_route" "route_admin" {
 resource "aws_apigatewayv2_route" "route_totem" {
 	api_id    = aws_apigatewayv2_api.api_gateway.id
 	route_key = "ANY /totem/{proxy+}"
-	target    = "integrations/${aws_apigatewayv2_integration.alb_integration.id}"
+	target    = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
 }
 
 # Create stage
