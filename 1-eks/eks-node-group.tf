@@ -1,16 +1,16 @@
 # Create launch template
 resource "aws_launch_template" "eks_node" {
-  name = "launch-template-${var.tech_challenge_project_name}"
+  name = "${var.project_name}-launch-template"
 
-	vpc_security_group_ids = [aws_security_group.tc_security_group.id]
+	# vpc_security_group_ids = [data.aws_security_group.tc_security_group.id]
 
 	# image_id = data.aws_ami.eks.id
 	instance_type = var.intance_eks_type
 
-  /* network_interfaces {
-    security_groups = [aws_security_group.tc_security_group.id]
-    associate_public_ip_address = false
-  } */
+  network_interfaces {
+    security_groups = [data.aws_security_group.tc_security_group.id]
+    associate_public_ip_address = true
+  }
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -24,21 +24,17 @@ resource "aws_launch_template" "eks_node" {
     resource_type = "instance"
 
     tags = {
-      Name = "EKS-MANAGED-NODE"
+      Name = "${var.project_name}-eks-node-instance"
     }
   }
 }
 
 resource "aws_eks_node_group" "tc_node_group" {
   cluster_name    = aws_eks_cluster.tc_eks_cluster.name
-  node_group_name = "node-group-${var.tech_challenge_project_name}"
+  node_group_name = "${var.project_name}-node-group"
   node_role_arn   = data.aws_iam_role.labrole.arn
 
-  subnet_ids = [
-		aws_subnet.private_subnet_1.id,
-		aws_subnet.private_subnet_2.id
-	]
-  # instance_types = [var.intance_eks_type]
+  subnet_ids = [data.aws_subnet.subnet_private_1.id, data.aws_subnet.subnet_private_2.id]
 
   scaling_config {
     desired_size = 1

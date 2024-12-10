@@ -61,7 +61,7 @@ terraform plan
   data "aws_instance" "ec2" {
       filter {
           name = "tag:eks:nodegroup-name"
-         values = ["node-group-${var.tech_challenge_project_name}"]
+         values = ["node-group-${var.project_name}"]
      }
   }
 ```

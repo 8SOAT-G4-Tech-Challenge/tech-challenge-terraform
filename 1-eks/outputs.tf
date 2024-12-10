@@ -14,10 +14,7 @@ output "kubeconfig-certificate-authority-data" {
   value = aws_lb_target_group.tc_lb_target_group.arn
 } */
 
-/* output "aws_lb_listener" {
+output "aws_lb_listener" {
 	value = aws_lb_listener.tc_lb_listener.arn
-} */
-
-output "private_subnet_ids" {
-	value = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 }
+

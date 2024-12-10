@@ -12,7 +12,3 @@
 /* output "load_balancer_ingress" {
   value = data.kubernetes_service.nlb_service.status[0].load_balancer[0].ingress[0].hostname
 } */
-
-output "nlb_listener_arn" {
-	value = data.aws_lb_listener.nlb_listener.arn
-}

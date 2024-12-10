@@ -22,7 +22,7 @@ data "aws_elasticache_cluster" "redis_cluster" {
   depends_on = [kubernetes_service.api_tech_challenge_service]
 } */
 
-data "aws_lb" "nlb" {
+/* data "aws_lb" "nlb" {
   tags = {
     "kubernetes.io/service-name" = "default/api-tech-challenge-service"
   }
@@ -32,4 +32,4 @@ data "aws_lb" "nlb" {
 data "aws_lb_listener" "nlb_listener" {
   load_balancer_arn = data.aws_lb.nlb.arn
   port              = 80
-}
+} */
