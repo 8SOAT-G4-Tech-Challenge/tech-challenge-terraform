@@ -26,19 +26,5 @@ variable "lb_listener_arn" {
 	description = "The ARN of the LB listener"
 	type = string
 }
-/* variable nlb_hostname {
-	description = "The DNS of the NLB created by the EKS module"
-	type        = string
-} */
-/* variable "private_subnet_ids" {
-	type = list(string)
-} */
-/* variable "lb_name" {
-  type    = string
-  default = "nlb-tech-challenge"
-} */
-
-/* variable "loadbalancer_metadata" {} */
-# variable "load_balancer_ingress" {}
 
 

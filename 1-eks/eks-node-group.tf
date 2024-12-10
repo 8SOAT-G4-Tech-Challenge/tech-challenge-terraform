@@ -2,9 +2,6 @@
 resource "aws_launch_template" "eks_node" {
   name = "${var.project_name}-launch-template"
 
-	# vpc_security_group_ids = [data.aws_security_group.tc_security_group.id]
-
-	# image_id = data.aws_ami.eks.id
 	instance_type = var.intance_eks_type
 
   network_interfaces {
