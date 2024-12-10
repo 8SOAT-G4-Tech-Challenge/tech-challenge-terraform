@@ -1,0 +1,18 @@
+name: 'Dev Deploy'
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform.yaml
+    with:
+      environment: dev
+      aws-assume-role-arn: 'arn:aws:iam::489134037384:role/github-actions-tech-challenge-terraform-pipeline'
+      aws-region: 'us-east-1'
