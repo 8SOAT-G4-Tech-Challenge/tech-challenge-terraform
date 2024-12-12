@@ -13,6 +13,5 @@ jobs:
   terraform:
     uses: ./.github/workflows/terraform.yaml
     with:
-      environment: dev
-      aws-assume-role-arn: 'arn:aws:iam::489134037384:role/github-actions-tech-challenge-terraform-pipeline'
+      environment: production
       aws-region: 'us-east-1'

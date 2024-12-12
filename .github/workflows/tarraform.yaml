@@ -6,9 +6,6 @@ on:
       environment:
         type: string
         required: true
-      aws-assume-role-arn:
-        type: string
-        required: true
       aws-region:
         type: string
         required: true
@@ -32,25 +29,55 @@ jobs:
       - name: Configure AWS credencials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ inputs.aws-assume-role-arn }}
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ vars.AWS_SESSION_TOKEN }}"
           aws-region: ${{ inputs.aws-region }}
 
-      - name: Terraform init
+      - name: Terraform init S3
+        run: cd s3
+        working-directory: ./s3
+        run: |
+          terraform init \
+            -backend-config="region=${{ inputs.aws-region }}"
+      
+      - name: Terraform Validate S3
+        working-directory: ./s3
+        run: terraform validate
+
+      - name: Terraform Plan S3
+        working-directory: ./s3
+        id: terraform-plan-s3
+        run: |
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform plan -var-files="./ENVS/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
+
+      - name: Terraform Apply EKS
+        working-directory: ./s3
+        id: terraform-apply-s3
+        run: |
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform apply "${{ inputs.environment }}.plan"
+
+      - name: Terraform init EKS
+        working-directory: ./eks
         run: |
           terraform init \
             -backend-config="region=${{ inputs.aws-region }}"
 
-      - name: Terraform Validate
+      - name: Terraform Validate EKS
+        working-directory: ./eks
         run: terraform validate
 
-      - name: Terraform Plan
+      - name: Terraform Plan EKS
+        working-directory: ./eks
         id: terraform-plan
         run: |
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
           terraform plan -var-files="./ENVS/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
 
-      - name: Terraform Apply
+      - name: Terraform Apply EKS
+        working-directory: ./eks
         id: terraform-apply
         run: |
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
