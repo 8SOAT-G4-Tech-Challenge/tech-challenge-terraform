@@ -1,10 +1,9 @@
-name: 'Dev Deploy'
+name: 'Production Deploy'
 
 on:
   push:
     branches:
       - develop
-
   workflow_dispatch:
 
 permissions:
