@@ -46,15 +46,13 @@ jobs:
         working-directory: s3
         id: terraform-plan-s3
         run: |
-          terraform plan \
-            -backend-config="region=${{ inputs.aws-region }}"
+          terraform plan
 
       - name: Terraform Apply S3
         working-directory: s3
         id: terraform-apply-s3
         run: |
-          terraform apply \
-            -backend-config="region=${{ inputs.aws-region }}"
+          terraform apply
 
       - name: Terraform init EKS
         working-directory: eks
@@ -70,12 +68,10 @@ jobs:
         working-directory: eks
         id: terraform-plan-eks
         run: |
-          terraform plan \
-            -backend-config="region=${{ inputs.aws-region }}"
+          terraform plan
 
       - name: Terraform Apply EKS
         working-directory: eks
         id: terraform-apply-eks
         run: |
-          terraform apply \
-            -backend-config="region=${{ inputs.aws-region }}"
+          terraform apply
