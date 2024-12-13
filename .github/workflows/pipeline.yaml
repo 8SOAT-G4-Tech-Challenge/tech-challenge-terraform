@@ -32,12 +32,11 @@ jobs:
           aws-region: 'us-east-1'
 
       - name: Terraform init S3
-        run: cd s3
         working-directory: ./s3
         run: |
           terraform init \
             -backend-config="region=${{ inputs.aws-region }}"
-      
+
       - name: Terraform Validate S3
         working-directory: ./s3
         run: terraform validate
