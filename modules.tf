@@ -1,5 +1,5 @@
 module "eks" {
-  source = "./1-eks"
+  source = "./eks"
 
   account_id_voclabs = var.account_id_voclabs
   cluster_name       = var.tech-challenge-cluster
@@ -7,7 +7,7 @@ module "eks" {
 }
 
 module "k8s" {
-  source = "./2-k8s"
+  source = "./k8s"
 
   kubeconfig-certificate-authority-data = module.eks.kubeconfig-certificate-authority-data
   cluster_name                          = module.eks.eks_cluster_name
@@ -16,7 +16,7 @@ module "k8s" {
 }
 
 module "cognito" {
-  source = "./3-cognito"
+  source = "./cognito"
 
   project_name        = var.project_name
   admin_user_email    = var.admin_user_email
@@ -26,7 +26,7 @@ module "cognito" {
 }
 
 module "lambda" {
-  source = "./4-lambda"
+  source = "./lambda"
 
   project_name   = var.project_name
   aws_account_id = var.account_id_voclabs
@@ -35,7 +35,7 @@ module "lambda" {
 }
 
 module "api_gateway" {
-  source = "./5-api_gateway"
+  source = "./api_gateway"
 
   project_name   = var.project_name
   region_default = var.region_default
