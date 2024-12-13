@@ -1,1 +1,0 @@
-variable tc_lb_target_group_arn {}

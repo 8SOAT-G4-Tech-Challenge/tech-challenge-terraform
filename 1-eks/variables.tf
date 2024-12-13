@@ -2,7 +2,7 @@ variable "region_default" {
   default = "us-east-1"
 }
 
-variable "tech_challenge_project_name" {
+variable "project_name" {
   default = "tech-challenge"
 }
 
@@ -20,6 +20,6 @@ variable "intance_eks_type" {
 
 variable "account_id_voclabs" {}
 
-variable "vpcCidr" {}
+variable "vpc_cidr" {}
 
 variable "cluster_name" {}

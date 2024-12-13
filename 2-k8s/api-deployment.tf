@@ -48,7 +48,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
         container {
           name  = "api-tech-challenge-container"
           image = "lucasaccurcio/tech-challenge-api:latest"
-          image_pull_policy = "IfNotPresent"
+          image_pull_policy = "Always"
           port {
             container_port = 3333
           }
@@ -61,8 +61,13 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           env {
             name  = "DATABASE_URL"
-            value = "${data.aws_secretsmanager_secret_version.secret-version.secret_string}@${data.aws_db_instance.rds_database_url.endpoint}/techchallenge"
+            value = "${data.aws_secretsmanager_secret_version.secret-version.secret_string}"
           }
+
+					env {
+						name 	= "REDIS_URL"
+						value = "redis://${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.address}:${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.port}"
+					}
 
           liveness_probe {
             http_get {
