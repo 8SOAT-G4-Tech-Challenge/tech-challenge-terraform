@@ -44,7 +44,7 @@ jobs:
 
       - name: Terraform Plan S3
         working-directory: ./s3
-        id: terraform-plan
+        id: terraform-plan-s3
         run: |
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
           terraform plan -var-files="./ENVS/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
@@ -68,14 +68,14 @@ jobs:
 
       - name: Terraform Plan EKS
         working-directory: ./eks
-        id: terraform-plan
+        id: terraform-plan-eks
         run: |
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
           terraform plan -var-files="./ENVS/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
 
       - name: Terraform Apply EKS
         working-directory: ./eks
-        id: terraform-apply
+        id: terraform-apply-eks
         run: |
           terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
           terraform apply "${{ inputs.environment }}.plan"
