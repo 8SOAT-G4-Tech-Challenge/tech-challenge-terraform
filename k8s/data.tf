@@ -11,5 +11,5 @@ data "aws_secretsmanager_secret_version" "secret-version" {
 }
 
 data "aws_elasticache_cluster" "redis_cluster" {
-	cluster_id = "tech-challenge-redis"
+  cluster_id = "tech-challenge-redis"
 }

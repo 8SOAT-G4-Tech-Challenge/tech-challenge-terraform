@@ -28,12 +28,12 @@ resource "aws_cognito_user_pool" "main" {
     mutable             = true
   }
 
-	username_attributes = ["email"]
+  username_attributes      = ["email"]
   auto_verified_attributes = ["email"]
 
   tags = {
-    Name        = "${var.project_name}-user-pool"
-    Iac				 = true
+    Name = "${var.project_name}-user-pool"
+    Iac  = true
   }
 }
 
@@ -43,9 +43,9 @@ resource "aws_cognito_user_pool_domain" "main" {
 }
 
 resource "aws_cognito_user_pool_client" "admin" {
-  name         = "admin-client"
-  user_pool_id = aws_cognito_user_pool.main.id
-	callback_urls                        = ["https://example.com"]
+  name                                 = "admin-client"
+  user_pool_id                         = aws_cognito_user_pool.main.id
+  callback_urls                        = ["https://example.com"]
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = ["email", "openid", "aws.cognito.signin.user.admin"]
@@ -67,11 +67,11 @@ resource "aws_cognito_user" "admin" {
   username     = var.admin_user_email
 
   attributes = {
-    email = var.admin_user_email
-		email_verified = true
+    email          = var.admin_user_email
+    email_verified = true
   }
 
-  password = var.admin_user_password
+  password   = var.admin_user_password
   depends_on = [aws_cognito_user_pool.main]
 }
 

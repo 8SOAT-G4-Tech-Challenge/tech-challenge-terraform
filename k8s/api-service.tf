@@ -18,7 +18,7 @@ resource "kubernetes_service" "api_tech_challenge_service" {
       protocol    = "TCP"
       port        = 80
       target_port = 3333
-			node_port	 = 31333
+      node_port   = 31333
     }
   }
 

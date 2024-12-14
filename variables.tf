@@ -1,10 +1,16 @@
 variable "account_id_voclabs" {
+  description = "AWS Account key"
+  type        = string
 }
 variable "cluster_name" {
-  default = "tech-challenge-cluster"
+  description = "Cluster name EKS"
+  type        = string
+  default     = "tech-challenge-cluster"
 }
 variable "vpc_cidr" {
-  default = "192.168.0.0/16"
+  description = "Range VPC IPs"
+  type        = string
+  default     = "192.168.0.0/16"
 }
 variable "project_name" {
   description = "The name of the project"

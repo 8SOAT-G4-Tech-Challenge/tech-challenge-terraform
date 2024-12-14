@@ -2,10 +2,10 @@
 resource "aws_launch_template" "eks_node" {
   name = "${var.project_name}-launch-template"
 
-	instance_type = var.intance_eks_type
+  instance_type = var.intance_eks_type
 
   network_interfaces {
-    security_groups = [data.aws_security_group.tc_security_group.id]
+    security_groups             = [data.aws_security_group.tc_security_group.id]
     associate_public_ip_address = true
   }
 
@@ -39,11 +39,11 @@ resource "aws_eks_node_group" "tc_node_group" {
     min_size     = 1
   }
 
-	update_config {
+  update_config {
     max_unavailable = 1
   }
 
-	launch_template {
+  launch_template {
     id      = aws_launch_template.eks_node.id
     version = aws_launch_template.eks_node.latest_version
   }

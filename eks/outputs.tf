@@ -1,5 +1,5 @@
 output "eks_cluster_name" {
-    value = aws_eks_cluster.tc_eks_cluster.name
+  value = aws_eks_cluster.tc_eks_cluster.name
 }
 
 output "eks_cluster_endpoint" {
@@ -11,6 +11,6 @@ output "kubeconfig-certificate-authority-data" {
 }
 
 output "aws_lb_listener" {
-	value = aws_lb_listener.nlb_listener.arn
+  value = aws_lb_listener.nlb_listener.arn
 }
 

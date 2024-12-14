@@ -1,21 +1,29 @@
 variable "region_default" {
-  default = "us-east-1"
+  description = "The default region"
+  type        = string
 }
 
 variable "project_name" {
-  default = "tech-challenge"
+  description = "The name of the project"
+  type        = string
 }
 
 variable "access_config" {
-  default = "API_AND_CONFIG_MAP"
+  description = "Access config map"
+  type        = string
+  default     = "API_AND_CONFIG_MAP"
 }
 
 variable "policy_arn" {
-  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  description = "AWS EKS cluster access policy"
+  type        = string
+  default     = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 }
 
 variable "intance_eks_type" {
-  default = "t3a.medium"
+  description = "AWS EKS instance type"
+  type        = string
+  default     = "t3a.medium"
 }
 
 variable "account_id_voclabs" {}
