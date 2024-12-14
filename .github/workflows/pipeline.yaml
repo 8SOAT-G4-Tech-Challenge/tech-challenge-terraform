@@ -1,4 +1,4 @@
-name: 'Terraform Workflow'
+name: 'CI - Infrastructure'
 
 on:
   push:
@@ -30,48 +30,32 @@ jobs:
           aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ vars.AWS_SESSION_TOKEN }}"
-          aws-region: 'us-east-1'
-
-      - name: Terraform init S3
-        working-directory: s3
-        run: |
-          terraform init \
-            -backend-config="region=${{ inputs.aws-region }}"
-
-      - name: Terraform Validate S3
-        working-directory: s3
-        run: terraform validate
-
-      - name: Terraform Plan S3
-        working-directory: s3
-        id: terraform-plan-s3
-        run: |
-          terraform plan
-
-      - name: Terraform Apply S3
-        working-directory: s3
-        id: terraform-apply-s3
-        run: |
-          terraform apply
+          aws-region: ${{ vars.AWS_REGION }}"
 
       - name: Terraform init EKS
-        working-directory: eks
         run: |
           terraform init \
-            -backend-config="region=${{ inputs.aws-region }}"
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Validate EKS
-        working-directory: eks
         run: terraform validate
 
       - name: Terraform Plan EKS
-        working-directory: eks
-        id: terraform-plan-eks
+        id: terraform-plan
         run: |
-          terraform plan -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}"
+          terraform plan \ 
+            -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}" \
+            -var="project_name=${{ vars.PROJECT_NAME }}" \
+            -var="region_default${{ var.AWS_REGION }}" \
+            -var="admin_user_email=${{ vars.ADMIN_USER_EMAIL }}" \
+            -var="admin_user_password=${{ secrets.ADMIN_USER_PASSWORD }}"
 
       - name: Terraform Apply EKS
-        working-directory: eks
-        id: terraform-apply-eks
+        id: terraform-apply
         run: |
-          terraform apply -auto-approve -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}"
+          terraform apply -auto-approve \
+            -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}" \
+            -var="project_name=${{ vars.PROJECT_NAME }}" \
+            -var="region_default${{ var.AWS_REGION }}" \
+            -var="admin_user_email=${{ vars.COGNITO_ADMIN_USER_EMAIL }}" \
+            -var="admin_user_password=${{ secrets.COGNITO_ADMIN_USER_PASSWORD }}"
