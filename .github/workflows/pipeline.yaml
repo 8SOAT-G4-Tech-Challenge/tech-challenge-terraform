@@ -68,10 +68,10 @@ jobs:
         working-directory: eks
         id: terraform-plan-eks
         run: |
-          terraform plan
+          terraform plan -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}"
 
       - name: Terraform Apply EKS
         working-directory: eks
         id: terraform-apply-eks
         run: |
-          terraform apply
+          terraform apply -auto-approve -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}"
