@@ -14,7 +14,14 @@ output "aws_lb_listener" {
   value = aws_lb_listener.nlb_listener.arn
 }
 
-output "tc_lb_target_group_arn" {
+output "tc_lb_target_group_application_arn" {
   value = aws_lb_target_group.tc_lb_target_group.arn
 }
 
+output "tc_lb_target_group_network_arn" {
+  value = aws_lb_target_group.nlb_target.arn
+}
+
+output "tc_load_balancer_arn" {
+  value = aws_lb.tc_load_balancer.arn
+}

@@ -17,6 +17,15 @@ module "k8s" {
   depends_on                            = [module.eks]
 }
 
+module "load-balancer" {
+  source = "./load-balancer"
+
+  tc_lb_target_group_application_arn    = module.eks.tc_lb_target_group_application_arn
+  tc_lb_target_group_network_arn        = module.eks.tc_lb_target_group_network_arn
+  tc_load_balancer_arn                  = module.eks.tc_load_balancer_arn
+  depends_on                            = [module.k8s]
+}
+
 module "cognito" {
   source = "./cognito"
 

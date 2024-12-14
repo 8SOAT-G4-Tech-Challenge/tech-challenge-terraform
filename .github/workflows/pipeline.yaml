@@ -1,19 +1,25 @@
 name: 'CI - Infrastructure'
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
+    inputs:
+      deployType:
+        description: 'Deploy type'
+        type: choice
+        options:
+          - deploy
+          - destroy
+        required: true
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  terraform:
-    name: 'Run Terraform'
+  terraform_deploy:
+    name: 'Run Terraform deploy'
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deployType == 'deploy' }}
 
     steps:
       - name: Checkout code
@@ -32,20 +38,46 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Terraform init EKS
+      - name: Terraform init infrastructure
         run: |
           terraform init
 
-      - name: Terraform Validate EKS
+      - name: Terraform Validate infrastructure
         run: |
           terraform validate
 
-      - name: Terraform Plan EKS
+      - name: Terraform Plan infrastructure
         id: terraform-plan
         run: |
           terraform plan -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}" -var="project_name=${{ vars.PROJECT_NAME }}" -var="region_default=${{ vars.AWS_REGION }}" -var="admin_user_email=${{ vars.COGNITO_ADMIN_USER_EMAIL }}" -var="admin_user_password=${{ secrets.COGNITO_ADMIN_USER_PASSWORD }}"
 
-      - name: Terraform Apply EKS
+      - name: Terraform Apply infrastructure
         id: terraform-apply
         run: |
           terraform apply -auto-approve -var="account_id_voclabs=${{ vars.AWS_ACCOUNT_KEY }}" -var="project_name=${{ vars.PROJECT_NAME }}" -var="region_default=${{ vars.AWS_REGION }}" -var="admin_user_email=${{ vars.COGNITO_ADMIN_USER_EMAIL }}" -var="admin_user_password=${{ secrets.COGNITO_ADMIN_USER_PASSWORD }}"
+
+  terraform_destroy:
+    name: 'Run Terraform destroy'
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deployType == 'destroy' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.1.7'
+
+      - name: Configure AWS credencials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Terraform destroy infra
+        run: |
+          terraform destroy
