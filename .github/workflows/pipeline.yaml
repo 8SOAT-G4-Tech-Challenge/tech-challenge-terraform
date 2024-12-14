@@ -29,8 +29,8 @@ jobs:
         with:
           aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ vars.AWS_SESSION_TOKEN }}"
-          aws-region: ${{ vars.AWS_REGION }}"
+          aws-session-token: ${{ vars.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Terraform init EKS
         run: |
