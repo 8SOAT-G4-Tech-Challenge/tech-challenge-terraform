@@ -34,8 +34,7 @@ jobs:
 
       - name: Terraform init EKS
         run: |
-          terraform init \
-            -backend-config="region=${{ vars.AWS_REGION }}"
+          terraform init
 
       - name: Terraform Validate EKS
         run: terraform validate
