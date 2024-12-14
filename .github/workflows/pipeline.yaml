@@ -78,6 +78,10 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ vars.AWS_REGION }}
 
+      - name: Terraform init infrastructure
+        run: |
+          terraform init
+
       - name: Terraform destroy infra
         run: |
           terraform destroy
