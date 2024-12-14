@@ -36,11 +36,3 @@ data "aws_subnet" "subnet_private_2" {
 data "aws_iam_role" "labrole" {
   name = "LabRole"
 }
-
-data "aws_lambda_function" "aws_lambda_function_admin" {
-  function_name = var.aws_lambda_function_name_admin
-}
-
-data "aws_lambda_function" "aws_lambda_function_customer" {
-  function_name = var.aws_lambda_function_name_customer
-}

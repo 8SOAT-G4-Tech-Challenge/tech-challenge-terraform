@@ -25,10 +25,10 @@ variable "lb_listener_arn" {
 variable "aws_lambda_function_admin_name" {
   description = "AWS Lambda function admin name"
   type        = string
-  default = "tech-challenge-authenticate-admin"
+  default     = "tech-challenge-authenticate-admin"
 }
 variable "aws_lambda_function_customer_name" {
   description = "AWS Lambda function customer name"
   type        = string
-  default = "tech-challenge-authenticate-customer"
+  default     = "tech-challenge-authenticate-customer"
 }
