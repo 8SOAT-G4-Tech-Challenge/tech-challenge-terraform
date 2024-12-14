@@ -2,7 +2,7 @@ module "eks" {
   source = "./eks"
 
   account_id_voclabs = var.account_id_voclabs
-  cluster_name       = var.tech-challenge-cluster
+  cluster_name       = var.cluster_name
   vpc_cidr           = var.vpc_cidr
 }
 
