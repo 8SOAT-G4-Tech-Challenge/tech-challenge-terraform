@@ -1,6 +1,6 @@
 variable "account_id_voclabs" {
 }
-variable "cluster_name" {
+variable "tech-challenge-cluster" {
   default = "tech-challenge-cluster"
 }
 variable "vpc_cidr" {
