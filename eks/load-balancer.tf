@@ -42,12 +42,6 @@ resource "aws_lb_listener" "tc_lb_listener" {
   }
 }
 
-/* resource "aws_lb_target_group_attachment" "tc_balancer_attach" {
-    target_group_arn = var.tc_lb_target_group_arn
-    target_id = ????
-    port = 31333
-} */
-
 # NETWORK LOAD BALANCER
 resource "aws_lb" "network_load_balancer" {
   name               = "${var.project_name}-nlb"
@@ -79,9 +73,3 @@ resource "aws_lb_listener" "nlb_listener" {
     target_group_arn = aws_lb_target_group.nlb_target.arn
   }
 }
-
-/* resource "aws_lb_target_group_attachment" "nlb_alb_attach" {
-  target_group_arn = aws_lb_target_group.nlb_target.arn
-  target_id        = aws_lb.tc_load_balancer.arn
-  port             = 80
-} */
