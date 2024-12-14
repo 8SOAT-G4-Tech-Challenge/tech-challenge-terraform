@@ -40,7 +40,7 @@ resource "aws_apigatewayv2_route" "auth" {
 resource "aws_apigatewayv2_integration" "auth" {
   api_id                 = aws_apigatewayv2_api.api_gateway.id
   integration_type       = "AWS_PROXY"
-  integration_uri        = "arn:aws:lambda:us-east-1:${var.aws_account_id}:function:${var.aws_lambda_function_name_admin}"
+  integration_uri        = "arn:aws:lambda:us-east-1:${var.aws_account_id}:function:${var.aws_lambda_function_admin_name}"
   integration_method     = "POST"
   payload_format_version = "2.0"
 }
@@ -49,7 +49,7 @@ resource "aws_apigatewayv2_integration" "auth" {
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = var.aws_lambda_function_name_admin
+  function_name = var.aws_lambda_function_admin_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
 }

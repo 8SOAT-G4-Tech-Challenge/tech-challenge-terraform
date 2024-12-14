@@ -4,6 +4,8 @@ module "eks" {
   account_id_voclabs = var.account_id_voclabs
   cluster_name       = var.cluster_name
   vpc_cidr           = var.vpc_cidr
+  region_default     = var.region_default
+  project_name       = var.project_name
 }
 
 module "k8s" {
@@ -25,15 +27,6 @@ module "cognito" {
   depends_on = [module.eks, module.k8s]
 }
 
-module "lambda" {
-  source = "./lambda"
-
-  project_name   = var.project_name
-  aws_account_id = var.account_id_voclabs
-
-  depends_on = [module.eks, module.k8s]
-}
-
 module "api_gateway" {
   source = "./api_gateway"
 
@@ -45,7 +38,5 @@ module "api_gateway" {
   cognito_client_id    = module.cognito.admin_client_id
   cognito_user_pool_id = module.cognito.user_pool_id
 
-  authenticate_admin_lambda_name = module.lambda.authenticate_admin_lambda_name
-
-  depends_on = [module.cognito, module.lambda, module.k8s]
+  depends_on = [module.cognito, module.k8s]
 }
