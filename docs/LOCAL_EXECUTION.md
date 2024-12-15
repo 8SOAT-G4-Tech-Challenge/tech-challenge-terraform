@@ -1,4 +1,4 @@
-## Como provisionar os recurso da AWS localmente
+## Como provisionar os recursos na AWS localmente
 
 ### Pré-requisitos
 
@@ -29,7 +29,7 @@
 
 8. A tela com as informações respectivas a AWS estarão disponíveis, você poderá consultar e realizar açõe de iniciar laboratório e finalizar laboratório. Nesse passo clique na opção de iniciar laboratório
 
-9. Espere até iniciar o laboratório(O icone na tela fica verde)
+9. Espere até iniciar o laboratório(O ícone na tela fica verde)
 
 10. Depois de iniciado, acesse o menu AWS details e em seguida clique em show _AWS CLI_
 
@@ -37,47 +37,22 @@
 
 12. Copie todo conteúdo destacado contendo as credencias de configuração e cole no arquivo ~/.aws/credentials. Caso já exista uma configuração [default], substitua. Pronto, seu AWS CLI esta configurado para executar comandos dentro da AWS presente no laboratório.
 
-13. Depois dos passos anteriores, acesse o diretório do projeto /tech-challenge-terraform e navegue até o diretório /s3. Execute o comando abaixo no terminal da sua maquina ou IDE e faça as devidas confirmações
+13. Depois dos passos anteriores, acesse o diretório do projeto /tech-challenge-terraform. Preencha as variáveis mapeadas dentro do arquivo terraform-tfvars-example com o valores corretos. **OBS:** Algumas das variáveis já estão devidamente preenchidas.
+
+14. Execute os comandos abaixo no terminal da sua maquina ou IDE e faça as devidas confirmações de criação dos recursos na AWS. Os comando abaixo serão executados com os valores das variáveis preenchidas no passo anterior.
 
 ```sh
 terraform init
 ```
 
-14. Execute agora o comando abaixo, fazendo as devidas confirmações também
+15. Execute agora o comando abaixo, fazendo as devidas confirmações também
 
 ```sh
 terraform plan
 ```
 
-15. Execute o camando para alicar e realizar a criação do bucket na AWS
+16. Execute o camando para alicar e realizar a criação do bucket na AWS
 
 ```sh
   terraform apply
 ```
-
-16. Depois de executado com sucesso, navegue até o diretório eks. Aqui será necessário acessar o arquivo data.tf e comantar a seguinte definição. Isso é devido a um erro causado por tentar filtrar uma instância EC2 antes de ser criada, como não é encontrada, gera o erro.
-
-```sh
-  data "aws_instance" "ec2" {
-      filter {
-          name = "tag:eks:nodegroup-name"
-         values = ["node-group-${var.project_name}"]
-     }
-  }
-```
-
-17. Ainda no diretório eks, acesse o arquivo load-balancer.tf e comente também a definição do recurso `aws_lb_target_group_attachment`, pois ele que faz a utilização do datasource comentado no passo anterior
-
-18. Agora, ainda no diretório eks, realize os mesmo comandos de executação do terraform e na mesma ordem. Essa execução levará um tempo maior devido a toda execução necessária para provisionar o recurso EKS
-
-19. Agora é hora de realizar os comando do kubectl, mas antes é preciso executar um comando utilizando a CLI da AWS para ser possível os comandos do kubectl serem reflitidos no recurso EKS da AWS. Execute o seguinte comando:
-
-```sh
-aws eks --region us-east-1 update-kubeconfig --name tech-challenge-cluster
-```
-
-20. Agora é possível executar os comando utilizando kubectl sem problemas. Navegue até o diretório k8s/templates e execute o arquivo deploy.sh
-
-21. Depois de executado com sucesso, descomente os dois blocos comentados anteriormente e realize novamente o comando do terraform para aplicar as alterações.
-
-22. Pronto. Agora a aplicação já esta pronta e provisionada na infraestrutura da AWS. Para pegar a url respectivo ao DNS. Acesse a AWS do laborátorio e depois acesso o recurso Load Balancer e ele forncerá a url para acesso.

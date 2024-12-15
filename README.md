@@ -1,4 +1,4 @@
-## FIAP Tech-Challenge 8SOAT - Grupo 04 - Terraform
+## FIAP Tech-Challenge 8SOAT - Grupo 04 - Terraform infraestrutura recursos da aplicação
 
 ### Objetivo do Projeto
 
@@ -16,9 +16,13 @@ Este repositório contém todo o mapeamento utilizando a ferramenta terraform pa
 - CLI AWS
 - Kubectl
 
-### Execução local
+### Execução
 
-Para realizar a execução local para o provisionamento da infraestrutura na cloud AWS, siga a seguinte [documentação](docs/EXECUCAO_LOCAL.md), que possui todos os passos necessários.
+Para a execução de toda a criação e provisionamento da infraestrutura na Cloud AWS, existem duas formas que podem ser utilizadas, local e via pipelines no _Git Hub_. Abaixo estão os links com a descrição dos passo necessários para cada forma. **Para realizar a execução respeite a ordem de execução descrita na documentação, pois existem depências de recursos presentes nesse repositórios, caso o contrário, a execução não será feita com sucesso e poderá apresentar erros**.
+
+- Para realizar a execução local para o provisionamento da infraestrutura na cloud AWS, siga a seguinte [documentação](docs/LOCAL_EXECUTION.md), que possui todos os passos necessários.
+
+- Para realizar a execução via pipeline no _Git Hub_ para o provisionamento da infraestrutura na cloud AWS, siga a seguinte [documentação](docs/PIPELINE_EXECUTION.md), que possui todos os passos necessários.
 
 ### Participantes do Projeto
 
