@@ -23,7 +23,7 @@ resource "aws_lb_target_group" "tc_lb_target_group" {
     enabled             = true
     healthy_threshold   = 2
     interval            = 30
-    path                = "/users"
+    path                = "/totem/products"
     port                = 31333
     matcher             = "200"
     protocol            = "HTTP"
