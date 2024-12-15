@@ -29,6 +29,31 @@ resource "aws_apigatewayv2_authorizer" "cognito" {
   }
 }
 
+# Customer auth route for login
+resource "aws_apigatewayv2_route" "customer" {
+  api_id    = aws_apigatewayv2_api.api_gateway.id
+  route_key = "POST /customer"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
+
+# Create integration with Lambda for customer auth
+resource "aws_apigatewayv2_integration" "customer" {
+  api_id                 = aws_apigatewayv2_api.api_gateway.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = "arn:aws:lambda:us-east-1:${var.aws_account_id}:function:${var.aws_lambda_function_customer_name}"
+  integration_method     = "POST"
+  payload_format_version = "2.0"
+}
+
+# Permission to run customer lambda
+resource "aws_lambda_permission" "apigw_lambda_customer" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = var.aws_lambda_function_customer_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
+}
+
 # Auth route for login
 resource "aws_apigatewayv2_route" "auth" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
