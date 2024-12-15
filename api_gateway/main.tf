@@ -34,6 +34,7 @@ resource "aws_apigatewayv2_route" "customer" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "POST /customer"
   target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+  depends_on = [ aws_apigatewayv2_integration.customer ]
 }
 
 # Create integration with Lambda for customer auth
@@ -59,6 +60,7 @@ resource "aws_apigatewayv2_route" "auth" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "POST /auth"
   target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+  depends_on = [ aws_apigatewayv2_integration.auth ]
 }
 
 # Integration with Cognito for authentication
@@ -100,6 +102,7 @@ resource "aws_apigatewayv2_route" "route_admin" {
   target             = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+  depends_on = [ aws_apigatewayv2_integration.nlb_integration ]
 }
 
 # Create API Gateway route
@@ -107,6 +110,7 @@ resource "aws_apigatewayv2_route" "route_totem" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "ANY /totem/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [ aws_apigatewayv2_integration.nlb_integration ]
 }
 
 # Create stage
