@@ -29,13 +29,6 @@ resource "aws_apigatewayv2_authorizer" "cognito" {
   }
 }
 
-# Customer auth route for login
-resource "aws_apigatewayv2_route" "customer" {
-  api_id    = aws_apigatewayv2_api.api_gateway.id
-  route_key = "POST /customer"
-  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
-}
-
 # Create integration with Lambda for customer auth
 resource "aws_apigatewayv2_integration" "customer" {
   api_id                 = aws_apigatewayv2_api.api_gateway.id
@@ -43,6 +36,15 @@ resource "aws_apigatewayv2_integration" "customer" {
   integration_uri        = "arn:aws:lambda:us-east-1:${var.aws_account_id}:function:${var.aws_lambda_function_customer_name}"
   integration_method     = "POST"
   payload_format_version = "2.0"
+}
+
+# Customer auth route for login
+resource "aws_apigatewayv2_route" "customer" {
+  api_id    = aws_apigatewayv2_api.api_gateway.id
+  route_key = "POST /customer"
+  target    = "integrations/${aws_apigatewayv2_integration.customer.id}"
+
+  depends_on = [aws_apigatewayv2_integration.customer]
 }
 
 # Permission to run customer lambda
@@ -59,6 +61,8 @@ resource "aws_apigatewayv2_route" "auth" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "POST /auth"
   target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+
+  depends_on = [aws_apigatewayv2_integration.auth]
 }
 
 # Integration with Cognito for authentication
