@@ -20,10 +20,10 @@ module "k8s" {
 module "load-balancer" {
   source = "./load-balancer"
 
-  tc_lb_target_group_application_arn    = module.eks.tc_lb_target_group_application_arn
-  tc_lb_target_group_network_arn        = module.eks.tc_lb_target_group_network_arn
-  tc_load_balancer_arn                  = module.eks.tc_load_balancer_arn
-  depends_on                            = [module.k8s]
+  tc_lb_target_group_application_arn = module.eks.tc_lb_target_group_application_arn
+  tc_lb_target_group_network_arn     = module.eks.tc_lb_target_group_network_arn
+  tc_load_balancer_arn               = module.eks.tc_load_balancer_arn
+  depends_on                         = [module.k8s]
 }
 
 module "cognito" {
@@ -47,5 +47,5 @@ module "api_gateway" {
   cognito_client_id    = module.cognito.admin_client_id
   cognito_user_pool_id = module.cognito.user_pool_id
 
-  depends_on = [module.cognito, module.k8s]
+  depends_on = [module.cognito, module.k8s, module.load-balancer, module.eks]
 }
