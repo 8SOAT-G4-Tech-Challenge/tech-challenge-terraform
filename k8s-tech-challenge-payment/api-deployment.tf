@@ -1,8 +1,8 @@
-resource "kubernetes_deployment" "api_tech_challenge" {
+resource "kubernetes_deployment" "api_tech_challenge_payment" {
   metadata {
-    name = "api-tech-challenge"
+    name = "api-tech-challenge-payment"
     labels = {
-      app = "api-tech-challenge"
+      app = "api-tech-challenge-payment"
     }
   }
 
@@ -18,15 +18,15 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
     selector {
       match_labels = {
-        app = "api-tech-challenge"
+        app = "api-tech-challenge-payment"
       }
     }
 
     template {
       metadata {
-        name = "api-tech-challenge"
+        name = "api-tech-challenge-payment"
         labels = {
-          app = "api-tech-challenge"
+          app = "api-tech-challenge-payment"
         }
       }
 
@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
         }
 
         container {
-          name              = "api-tech-challenge-container"
+          name              = "api-tech-challenge-payment-container"
           image             = "lucasaccurcio/tech-challenge-api:latest"
           image_pull_policy = "Always"
           port {
@@ -64,9 +64,9 @@ resource "kubernetes_deployment" "api_tech_challenge" {
             value = data.aws_secretsmanager_secret_version.secret-version.secret_string
           }
 
-          env {
-            name  = "REDIS_URL"
-            value = "redis://${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.address}:${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.port}"
+					env {
+            name  = "ORDER_BASE_URL"
+            value = "http://api-tech-challenge-order-service"
           }
 
           liveness_probe {

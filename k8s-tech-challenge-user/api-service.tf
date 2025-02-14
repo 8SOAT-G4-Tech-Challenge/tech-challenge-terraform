@@ -1,8 +1,8 @@
 resource "kubernetes_service" "api_tech_challenge_service" {
   metadata {
-    name = "api-tech-challenge-service"
+    name = "api-tech-challenge-user-service"
     labels = {
-      name = "api-tech-challenge-service"
+      name = "api-tech-challenge-user-service"
     }
   }
 
@@ -10,15 +10,15 @@ resource "kubernetes_service" "api_tech_challenge_service" {
     type = "NodePort"
 
     selector = {
-      app = "api-tech-challenge"
+      app = "api-tech-challenge-user"
     }
 
     port {
       name        = "api-port"
       protocol    = "TCP"
       port        = 80
-      target_port = 3333
-      node_port   = 31333
+      target_port = 3334
+      node_port   = 31334
     }
   }
 
