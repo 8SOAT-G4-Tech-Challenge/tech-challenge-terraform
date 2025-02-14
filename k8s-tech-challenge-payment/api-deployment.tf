@@ -71,7 +71,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           liveness_probe {
             http_get {
-              path = "/docs"
+              path = "/totem/payment-orders/e10adc3949ba59abbe56e057f20f883e"
               port = 3333
             }
             initial_delay_seconds = 60
@@ -81,7 +81,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           readiness_probe {
             http_get {
-              path = "/docs"
+              path = "/totem/payment-orders/e10adc3949ba59abbe56e057f20f883e"
               port = 3333
             }
             initial_delay_seconds = 10

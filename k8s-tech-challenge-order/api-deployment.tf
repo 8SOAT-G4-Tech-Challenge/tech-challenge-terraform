@@ -76,7 +76,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           liveness_probe {
             http_get {
-              path = "/docs"
+              path = "/totem/products"
               port = 3000
             }
             initial_delay_seconds = 60
@@ -86,7 +86,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           readiness_probe {
             http_get {
-              path = "/docs"
+              path = "/totem/products"
               port = 3000
             }
             initial_delay_seconds = 10

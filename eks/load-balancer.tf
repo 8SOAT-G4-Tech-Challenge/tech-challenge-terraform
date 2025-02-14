@@ -66,9 +66,9 @@ resource "aws_lb_target_group" "user_target_group" {
     enabled             = true
     healthy_threshold   = 2
     interval            = 30
-    path                = "/totem/customers/property"
+    path                = "/admin/users"
     port                = 31334
-    matcher             = "400"
+    matcher             = "200"
     protocol            = "HTTP"
     timeout             = 5
     unhealthy_threshold = 2
