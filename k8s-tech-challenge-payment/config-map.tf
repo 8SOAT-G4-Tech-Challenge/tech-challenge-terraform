@@ -1,6 +1,7 @@
 resource "kubernetes_config_map" "env_config" {
   metadata {
     name      = "env-config-tech-challenge-payment"
+    namespace = kubernetes_namespace.payment.metadata[0].name
     labels = {
       name = "env-config-tech-challenge-payment"
     }
@@ -12,4 +13,6 @@ resource "kubernetes_config_map" "env_config" {
     MERCADO_PAGO_USER_ID         = "1999874453"
     MERCADO_PAGO_EXTERNAL_POS_ID = "01"
   }
+
+  depends_on = [kubernetes_namespace.payment]
 }

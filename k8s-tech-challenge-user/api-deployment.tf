@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "api_tech_challenge" {
   metadata {
     name      = "api-tech-challenge-user"
-		# namespace = kubernetes_namespace.user.metadata[0].name
+		namespace = kubernetes_namespace.user.metadata[0].name
     labels = {
       app = "api-tech-challenge-user"
     }
@@ -26,7 +26,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
     template {
       metadata {
         name = "api-tech-challenge-user"
-				# namespace = kubernetes_namespace.user.metadata[0].name
+				namespace = kubernetes_namespace.user.metadata[0].name
         labels = {
           app = "api-tech-challenge-user"
         }
@@ -71,9 +71,9 @@ resource "kubernetes_deployment" "api_tech_challenge" {
             value = "redis://${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.address}:${data.aws_elasticache_cluster.redis_cluster.cache_nodes.0.port}"
           }
 
-          /* liveness_probe {
+          liveness_probe {
             http_get {
-              path = "user/admin/users"
+              path = "users/health"
               port = 3334
             }
             initial_delay_seconds = 60
@@ -83,13 +83,13 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           readiness_probe {
             http_get {
-              path = "/admin/users"
+              path = "users/health"
               port = 3334
             }
             initial_delay_seconds = 10
             period_seconds        = 10
             failure_threshold     = 5
-          } */
+          }
 
           resources {
             requests = {

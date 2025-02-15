@@ -1,6 +1,7 @@
 resource "kubernetes_deployment" "api_tech_challenge_payment" {
   metadata {
     name      = "api-tech-challenge-payment"
+    namespace = kubernetes_namespace.payment.metadata[0].name
     labels = {
       app = "api-tech-challenge-payment"
     }
@@ -25,6 +26,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
     template {
       metadata {
         name = "api-tech-challenge-payment"
+        namespace = kubernetes_namespace.payment.metadata[0].name
         labels = {
           app = "api-tech-challenge-payment"
         }
@@ -71,7 +73,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           liveness_probe {
             http_get {
-              path = "/totem/payment-orders/e10adc3949ba59abbe56e057f20f883e"
+              path = "/payments/health"
               port = 3333
             }
             initial_delay_seconds = 60
@@ -81,7 +83,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           readiness_probe {
             http_get {
-              path = "/totem/payment-orders/e10adc3949ba59abbe56e057f20f883e"
+              path = "/payments/health"
               port = 3333
             }
             initial_delay_seconds = 10

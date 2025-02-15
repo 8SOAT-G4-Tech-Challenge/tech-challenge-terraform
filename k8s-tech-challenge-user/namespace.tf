@@ -1,5 +1,5 @@
-/* resource "kubernetes_namespace" "user" {
+resource "kubernetes_namespace" "user" {
   metadata {
-    name = "user-namespace"
+    name = "tech-challenge-user"
   }
-} */
+}

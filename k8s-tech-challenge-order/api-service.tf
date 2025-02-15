@@ -1,6 +1,7 @@
 resource "kubernetes_service" "api_tech_challenge_order_service" {
   metadata {
     name      = "api-tech-challenge-order-service"
+    namespace = kubernetes_namespace.order.metadata[0].name
     labels = {
       name = "api-tech-challenge-order-service"
     }

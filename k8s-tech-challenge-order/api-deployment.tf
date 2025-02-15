@@ -1,6 +1,7 @@
 resource "kubernetes_deployment" "api_tech_challenge" {
   metadata {
     name      = "api-tech-challenge-order"
+    namespace = kubernetes_namespace.order.metadata[0].name
     labels = {
       app = "api-tech-challenge-order"
     }
@@ -25,6 +26,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
     template {
       metadata {
         name = "api-tech-challenge-order"
+        namespace = kubernetes_namespace.order.metadata[0].name
         labels = {
           app = "api-tech-challenge-order"
         }
@@ -74,9 +76,9 @@ resource "kubernetes_deployment" "api_tech_challenge" {
             value = "http://api-tech-challenge-payment-service"
           }
 
-          /* liveness_probe {
+          liveness_probe {
             http_get {
-              path = "/order/totem/products"
+              path = "/orders/health"
               port = 3000
             }
             initial_delay_seconds = 60
@@ -86,13 +88,13 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           readiness_probe {
             http_get {
-              path = "/order/totem/products"
+              path = "/orders/health"
               port = 3000
             }
             initial_delay_seconds = 10
             period_seconds        = 10
             failure_threshold     = 5
-          } */
+          }
 
           resources {
             requests = {

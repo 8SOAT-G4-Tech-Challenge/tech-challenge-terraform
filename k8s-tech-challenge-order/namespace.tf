@@ -1,5 +1,5 @@
-/* resource "kubernetes_namespace" "order" {
+resource "kubernetes_namespace" "order" {
   metadata {
-    name = "order-namespace"
+    name = "tech-challenge-order"
   }
-} */
+}

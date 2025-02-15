@@ -1,6 +1,7 @@
 resource "kubernetes_service" "api_tech_challenge_payment_service" {
   metadata {
     name      = "api-tech-challenge-payment-service"
+    namespace = kubernetes_namespace.payment.metadata[0].name
     labels = {
       name = "api-tech-challenge-payment-service"
     }
