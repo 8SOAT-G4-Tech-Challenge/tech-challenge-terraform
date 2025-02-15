@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "api_tech_challenge" {
   metadata {
     name      = "api-tech-challenge-user"
-		namespace = kubernetes_namespace.user.metadata[0].name
+    namespace = kubernetes_namespace.user.metadata[0].name
     labels = {
       app = "api-tech-challenge-user"
     }
@@ -25,8 +25,8 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
     template {
       metadata {
-        name = "api-tech-challenge-user"
-				namespace = kubernetes_namespace.user.metadata[0].name
+        name      = "api-tech-challenge-user"
+        namespace = kubernetes_namespace.user.metadata[0].name
         labels = {
           app = "api-tech-challenge-user"
         }

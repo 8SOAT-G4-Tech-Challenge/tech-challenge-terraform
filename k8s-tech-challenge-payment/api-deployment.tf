@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
     template {
       metadata {
-        name = "api-tech-challenge-payment"
+        name      = "api-tech-challenge-payment"
         namespace = kubernetes_namespace.payment.metadata[0].name
         labels = {
           app = "api-tech-challenge-payment"

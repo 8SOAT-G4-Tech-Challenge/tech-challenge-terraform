@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
     template {
       metadata {
-        name = "api-tech-challenge-order"
+        name      = "api-tech-challenge-order"
         namespace = kubernetes_namespace.order.metadata[0].name
         labels = {
           app = "api-tech-challenge-order"
