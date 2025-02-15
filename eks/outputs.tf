@@ -14,9 +14,25 @@ output "aws_lb_listener" {
   value = aws_lb_listener.nlb_listener.arn
 }
 
-output "tc_lb_target_group_application_arn" {
-  value = aws_lb_target_group.tc_lb_target_group.arn
+# order target group
+output "order_target_group_arn" {
+  value = aws_lb_target_group.order_target_group.arn
 }
+
+# payment target group
+output "payment_target_group_arn" {
+  value = aws_lb_target_group.payment_target_group.arn
+}
+
+# user target group
+output "user_target_group_arn" {
+  value = aws_lb_target_group.user_target_group.arn
+}
+
+# antigo
+/* output "tc_lb_target_group_application_arn" {
+  value = aws_lb_target_group.tc_lb_target_group.arn
+} */
 
 output "tc_lb_target_group_network_arn" {
   value = aws_lb_target_group.nlb_target.arn

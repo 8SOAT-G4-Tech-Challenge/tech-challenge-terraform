@@ -96,20 +96,74 @@ resource "aws_apigatewayv2_integration" "nlb_integration" {
   }
 }
 
-# Create API Gateway route
-resource "aws_apigatewayv2_route" "route_admin" {
+# Create API Gateway route admin
+resource "aws_apigatewayv2_route" "route_order_admin" {
   api_id             = aws_apigatewayv2_api.api_gateway.id
-  route_key          = "ANY /admin/{proxy+}"
+  route_key          = "ANY /orders/admin/{proxy+}"
   target             = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
   depends_on         = [aws_apigatewayv2_integration.nlb_integration]
 }
 
-# Create API Gateway route
-resource "aws_apigatewayv2_route" "route_totem" {
+resource "aws_apigatewayv2_route" "route_payment_admin" {
+  api_id             = aws_apigatewayv2_api.api_gateway.id
+  route_key          = "ANY /payments/admin/{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+  depends_on         = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+resource "aws_apigatewayv2_route" "route_user_admin" {
+  api_id             = aws_apigatewayv2_api.api_gateway.id
+  route_key          = "ANY /users/admin/{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+  depends_on         = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+# Create API Gateway route totem
+resource "aws_apigatewayv2_route" "route_order_totem" {
   api_id     = aws_apigatewayv2_api.api_gateway.id
-  route_key  = "ANY /totem/{proxy+}"
+  route_key  = "ANY /orders/totem/{proxy+}"
+  target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+resource "aws_apigatewayv2_route" "route_payment_totem" {
+  api_id     = aws_apigatewayv2_api.api_gateway.id
+  route_key  = "ANY /payments/totem/{proxy+}"
+  target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+resource "aws_apigatewayv2_route" "route_user_totem" {
+  api_id     = aws_apigatewayv2_api.api_gateway.id
+  route_key  = "ANY /users/totem/{proxy+}"
+  target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+# Create API Gateway route health
+resource "aws_apigatewayv2_route" "route_order_health" {
+  api_id     = aws_apigatewayv2_api.api_gateway.id
+  route_key  = "ANY /orders/health"
+  target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+resource "aws_apigatewayv2_route" "route_payment_health" {
+  api_id     = aws_apigatewayv2_api.api_gateway.id
+  route_key  = "ANY /payments/health"
+  target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
+  depends_on = [aws_apigatewayv2_integration.nlb_integration]
+}
+
+resource "aws_apigatewayv2_route" "route_user_health" {
+  api_id     = aws_apigatewayv2_api.api_gateway.id
+  route_key  = "ANY /users/health"
   target     = "integrations/${aws_apigatewayv2_integration.nlb_integration.id}"
   depends_on = [aws_apigatewayv2_integration.nlb_integration]
 }

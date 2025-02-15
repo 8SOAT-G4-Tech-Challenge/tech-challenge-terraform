@@ -1,8 +1,9 @@
 resource "kubernetes_deployment" "api_tech_challenge" {
   metadata {
-    name = "api-tech-challenge"
+    name      = "api-tech-challenge-user"
+    namespace = kubernetes_namespace.user.metadata[0].name
     labels = {
-      app = "api-tech-challenge"
+      app = "api-tech-challenge-user"
     }
   }
 
@@ -18,15 +19,16 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
     selector {
       match_labels = {
-        app = "api-tech-challenge"
+        app = "api-tech-challenge-user"
       }
     }
 
     template {
       metadata {
-        name = "api-tech-challenge"
+        name      = "api-tech-challenge-user"
+        namespace = kubernetes_namespace.user.metadata[0].name
         labels = {
-          app = "api-tech-challenge"
+          app = "api-tech-challenge-user"
         }
       }
 
@@ -46,16 +48,16 @@ resource "kubernetes_deployment" "api_tech_challenge" {
         }
 
         container {
-          name              = "api-tech-challenge-container"
-          image             = "lucasaccurcio/tech-challenge-api:latest"
+          name              = "api-tech-challenge-user-container"
+          image             = "lucasaccurcio/tech-challenge-user-api:latest"
           image_pull_policy = "Always"
           port {
-            container_port = 3333
+            container_port = 3334
           }
 
           env_from {
             config_map_ref {
-              name = "env-config"
+              name = "env-config-tech-challenge-user"
             }
           }
 
@@ -71,8 +73,8 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           liveness_probe {
             http_get {
-              path = "/docs"
-              port = 3333
+              path = "users/health"
+              port = 3334
             }
             initial_delay_seconds = 60
             period_seconds        = 10
@@ -81,8 +83,8 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           readiness_probe {
             http_get {
-              path = "/docs"
-              port = 3333
+              path = "users/health"
+              port = 3334
             }
             initial_delay_seconds = 10
             period_seconds        = 10

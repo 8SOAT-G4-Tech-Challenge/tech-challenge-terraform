@@ -50,23 +50,3 @@ data "aws_subnet" "subnet_public_2" {
 data "aws_iam_role" "labrole" {
   name = "LabRole"
 }
-
-/* data "aws_instance" "ec2" {
-    filter {
-        name = "tag:eks:nodegroup-name"
-        values = ["node-group-tech-challenge"]
-    }
-} */
-/* data "aws_instances" "instance_eks" {
-  filter {
-    name   = "tag:kubernetes.io/cluster/tech-challenge-cluster"
-    values = ["owned"]
-  }
-
-  filter {
-    name   = "instance-state-name"
-    values = ["running"]
-  }
-} */
-
-
