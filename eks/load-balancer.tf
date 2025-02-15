@@ -95,7 +95,7 @@ resource "aws_lb_target_group" "user_target_group" {
   }
 } */
 
-resource "aws_lb_listener" "tc_lb_listener" {
+/* resource "aws_lb_listener" "tc_lb_listener" {
   load_balancer_arn = aws_lb.tc_load_balancer.arn
   port              = 80
   protocol          = "HTTP"
@@ -113,6 +113,62 @@ resource "aws_lb_listener" "tc_lb_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.user_target_group.arn
+  }
+} */
+
+# Listener for ALB
+resource "aws_lb_listener" "tc_lb_listener" {
+  load_balancer_arn = aws_lb.tc_load_balancer.arn
+  port              = 80
+  protocol          = "HTTP"
+}
+
+# Listener rules for routing traffic to target groups
+resource "aws_lb_listener_rule" "order_rule" {
+  listener_arn = aws_lb_listener.tc_lb_listener.arn
+  priority     = 10
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.order_target_group.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/order/*"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "payment_rule" {
+  listener_arn = aws_lb_listener.tc_lb_listener.arn
+  priority     = 20
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.payment_target_group.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/payment-order/*"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "user_rule" {
+  listener_arn = aws_lb_listener.tc_lb_listener.arn
+  priority     = 30
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.user_target_group.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/user/*"]
+    }
   }
 }
 

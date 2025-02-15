@@ -1,6 +1,7 @@
 resource "kubernetes_service" "api_tech_challenge_service" {
   metadata {
-    name = "api-tech-challenge-user-service"
+    name      = "api-tech-challenge-user-service"
+		# namespace = kubernetes_namespace.user.metadata[0].name
     labels = {
       name = "api-tech-challenge-user-service"
     }

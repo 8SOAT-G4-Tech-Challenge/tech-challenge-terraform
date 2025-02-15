@@ -1,9 +1,9 @@
 data "aws_db_instance" "rds_database_url" {
-  db_instance_identifier = "tech-challenge-database" // Está sendo usado?
+  db_instance_identifier = "tech-challenge-order-database" // Está sendo usado?
 }
 
 data "aws_secretsmanager_secret" "database_secret" {
-  name = "aws_rds_endpoint"
+  name = "tech-challenge-order-aws-rds-endpoint"
 }
 
 data "aws_secretsmanager_secret_version" "secret-version" {

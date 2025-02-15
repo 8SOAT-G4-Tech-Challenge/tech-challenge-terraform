@@ -32,7 +32,7 @@ module "k8s-tech-challenge-order" {
   kubeconfig-certificate-authority-data = module.eks.kubeconfig-certificate-authority-data
   cluster_name                          = module.eks.eks_cluster_name
   eks_cluster_endpoint                  = module.eks.eks_cluster_endpoint
-  depends_on                            = [module.eks, module.k8s-tech-challenge-payment, module.k8s-tech-challenge-user]
+  depends_on                            = [module.eks, module.k8s-tech-challenge-user]
 }
 
 module "load-balancer" {
@@ -43,7 +43,7 @@ module "load-balancer" {
   user_target_group_arn          = module.eks.user_target_group_arn
   tc_lb_target_group_network_arn = module.eks.tc_lb_target_group_network_arn
   tc_load_balancer_arn           = module.eks.tc_load_balancer_arn
-  depends_on                     = [module.k8s-tech-challenge-order, module.k8s-tech-challenge-payment, module.k8s-tech-challenge-user]
+  depends_on                     = [module.eks, module.k8s-tech-challenge-user]
 }
 
 module "cognito" {
@@ -53,7 +53,7 @@ module "cognito" {
   admin_user_email    = var.admin_user_email
   admin_user_password = var.admin_user_password
 
-  depends_on = [module.eks, module.k8s-tech-challenge-order, module.k8s-tech-challenge-payment, module.k8s-tech-challenge-user]
+  depends_on = [module.eks, module.k8s-tech-challenge-user]
 }
 
 module "api_gateway" {
@@ -67,5 +67,5 @@ module "api_gateway" {
   cognito_client_id    = module.cognito.admin_client_id
   cognito_user_pool_id = module.cognito.user_pool_id
 
-  depends_on = [module.cognito, module.k8s-tech-challenge-order, module.k8s-tech-challenge-payment, module.k8s-tech-challenge-user, module.load-balancer, module.eks]
+  depends_on = [module.cognito, module.k8s-tech-challenge-user, module.load-balancer, module.eks]
 }

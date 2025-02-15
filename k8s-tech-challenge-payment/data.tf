@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "database_secret" {
-	name = "tech-challenge-payment-atlas-mongodb-endpoint"
+  name = "tech-challenge-payment-atlas-mongodb-endpoint"
 }
 
 data "aws_secretsmanager_secret_version" "secret-version" {

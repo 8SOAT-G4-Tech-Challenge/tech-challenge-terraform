@@ -1,6 +1,6 @@
 resource "kubernetes_deployment" "api_tech_challenge_payment" {
   metadata {
-    name = "api-tech-challenge-payment"
+    name      = "api-tech-challenge-payment"
     labels = {
       app = "api-tech-challenge-payment"
     }
@@ -47,7 +47,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
         container {
           name              = "api-tech-challenge-payment-container"
-          image             = "lucasaccurcio/tech-challenge-api:latest"
+          image             = "lucasaccurcio/tech-challenge-payment-api:latest"
           image_pull_policy = "Always"
           port {
             container_port = 3333
@@ -55,7 +55,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           env_from {
             config_map_ref {
-              name = "env-config"
+              name = "env-config-tech-challenge-payment"
             }
           }
 
@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
             value = data.aws_secretsmanager_secret_version.secret-version.secret_string
           }
 
-					env {
+          env {
             name  = "ORDER_BASE_URL"
             value = "http://api-tech-challenge-order-service"
           }

@@ -12,4 +12,3 @@ variable "kubeconfig-certificate-authority-data" {
   description = "Kubernetes configuration certificate authority data"
   type        = string
 }
-

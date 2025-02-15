@@ -1,6 +1,6 @@
 resource "kubernetes_service" "api_tech_challenge_payment_service" {
   metadata {
-    name = "api-tech-challenge-payment-service"
+    name      = "api-tech-challenge-payment-service"
     labels = {
       name = "api-tech-challenge-payment-service"
     }

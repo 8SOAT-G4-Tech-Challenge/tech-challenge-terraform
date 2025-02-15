@@ -1,8 +1,8 @@
 resource "kubernetes_config_map" "env_config" {
   metadata {
-    name = "env-config"
+    name      = "env-config-tech-challenge-payment"
     labels = {
-      name = "env-config"
+      name = "env-config-tech-challenge-payment"
     }
   }
 

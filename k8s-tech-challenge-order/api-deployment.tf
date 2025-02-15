@@ -1,8 +1,8 @@
 resource "kubernetes_deployment" "api_tech_challenge" {
   metadata {
-    name = "api-tech-challenge"
+    name      = "api-tech-challenge-order"
     labels = {
-      app = "api-tech-challenge"
+      app = "api-tech-challenge-order"
     }
   }
 
@@ -18,15 +18,15 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
     selector {
       match_labels = {
-        app = "api-tech-challenge"
+        app = "api-tech-challenge-order"
       }
     }
 
     template {
       metadata {
-        name = "api-tech-challenge"
+        name = "api-tech-challenge-order"
         labels = {
-          app = "api-tech-challenge"
+          app = "api-tech-challenge-order"
         }
       }
 
@@ -46,8 +46,8 @@ resource "kubernetes_deployment" "api_tech_challenge" {
         }
 
         container {
-          name              = "api-tech-challenge-container"
-          image             = "lucasaccurcio/tech-challenge-api:latest"
+          name              = "api-tech-challenge-order-container"
+          image             = "lucasaccurcio/tech-challenge-order-api:latest"
           image_pull_policy = "Always"
           port {
             container_port = 3000
@@ -55,7 +55,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           env_from {
             config_map_ref {
-              name = "env-config"
+              name = "env-config-tech-challenge-order"
             }
           }
 
@@ -66,7 +66,7 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           env {
             name  = "USER_BASE_URL"
-            value =	"http://api-tech-challenge-user"
+            value = "http://api-tech-challenge-user"
           }
 
           env {
@@ -74,9 +74,9 @@ resource "kubernetes_deployment" "api_tech_challenge" {
             value = "http://api-tech-challenge-payment-service"
           }
 
-          liveness_probe {
+          /* liveness_probe {
             http_get {
-              path = "/totem/products"
+              path = "/order/totem/products"
               port = 3000
             }
             initial_delay_seconds = 60
@@ -86,13 +86,13 @@ resource "kubernetes_deployment" "api_tech_challenge" {
 
           readiness_probe {
             http_get {
-              path = "/totem/products"
+              path = "/order/totem/products"
               port = 3000
             }
             initial_delay_seconds = 10
             period_seconds        = 10
             failure_threshold     = 5
-          }
+          } */
 
           resources {
             requests = {

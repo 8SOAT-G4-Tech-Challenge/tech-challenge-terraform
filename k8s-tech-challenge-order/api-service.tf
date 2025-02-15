@@ -1,6 +1,6 @@
 resource "kubernetes_service" "api_tech_challenge_order_service" {
   metadata {
-    name = "api-tech-challenge-order-service"
+    name      = "api-tech-challenge-order-service"
     labels = {
       name = "api-tech-challenge-order-service"
     }
