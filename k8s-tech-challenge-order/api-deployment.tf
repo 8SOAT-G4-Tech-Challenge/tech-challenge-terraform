@@ -67,13 +67,13 @@ resource "kubernetes_deployment" "api_tech_challenge" {
           }
 
           env {
-            name  = "USER_BASE_URL"
-            value = "http://api-tech-challenge-user"
+            name  = "CUSTOMER_BASE_URL"
+            value = "http://api-tech-challenge-user-service.tech-challenge-user.svc.cluster.local/users"
           }
 
           env {
             name  = "PAYMENT_ORDER_BASE_URL"
-            value = "http://api-tech-challenge-payment-service"
+            value = "http://api-tech-challenge-payment-service.tech-challenge-payment.svc.cluster.local/payments"
           }
 
           liveness_probe {

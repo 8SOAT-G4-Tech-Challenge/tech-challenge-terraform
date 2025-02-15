@@ -68,7 +68,7 @@ resource "kubernetes_deployment" "api_tech_challenge_payment" {
 
           env {
             name  = "ORDER_BASE_URL"
-            value = "http://api-tech-challenge-order-service"
+            value = "http://api-tech-challenge-order-service.tech-challenge-order.svc.cluster.local/orders"
           }
 
           liveness_probe {
